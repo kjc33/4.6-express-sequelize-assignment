@@ -35,4 +35,6 @@ const Item = sequelize.define(
   }
 );
 
+Item.belongsTo(Category, { foreignKey: 'categoryid', as: 'category' });
+
 module.exports = Item;

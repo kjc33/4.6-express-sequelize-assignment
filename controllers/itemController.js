@@ -1,8 +1,11 @@
 const Item = require("../models/itemModel");
+const Category = require("../models/categoryModel");
 
 exports.getAllItems = async (req, res) => {
   try {
-    const result = await Item.findAll();
+    const result = await Item.findAll({
+      include: [{ model: Category, as: "category", attributes: ["name"] }],
+    });
     return res.status(200).json({ message: "Items fetched successfully!", data: result });
   } catch (error) {
     return res.status(500).json({ message: "Failed to fetch Items.", error: error.message });
@@ -11,7 +14,9 @@ exports.getAllItems = async (req, res) => {
 
 exports.getSingleItem = async (req, res) => {
   try {
-    const result = await Item.findByPk(req.params.id);
+    const result = await Item.findByPk(req.params.id, {
+      include: [{ model: Category, as: "category", attributes: ["name"] }],
+    });
     if (result != null) {
       return res.status(200).json({ message: "Item fetched successfully!", data: result });
     } else {
