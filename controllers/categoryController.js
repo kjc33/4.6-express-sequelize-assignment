@@ -1,4 +1,5 @@
 const Category = require("../models/categoryModel");
+const Item = require("../models/itemModel");
 
 exports.getAllCategories = async (req, res) => {
   try {
@@ -56,5 +57,18 @@ exports.deleteCategory = async (req, res) => {
     return res.status(200).json({ message: "Category deleted successfully!" });
   } catch (error) {
     return res.status(500).json({ message: "Failed to delete category.", error: error.message });
+  }
+};
+
+exports.getItemsByCategory = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+
+    const items = await Item.findAll({
+      where: { categoryid: categoryId },
+    });
+    return res.status(200).json({ message: "Items fetched successfully!", data: items });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to fetch items for the category.", error: error.message });
   }
 };
