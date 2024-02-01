@@ -1,7 +1,9 @@
 const { Sequelize } = require("sequelize");
 
+const password = process.env.DB_PASSWORD;
+
 // DB Connection Configuration
-const sequelize = new Sequelize("ecommerce", "postgres", process.env.DB_PASSWORD, {
+const sequelize = new Sequelize("ecommerce", "postgres", password, {
   host: "localhost",
   dialect: "postgres",
 });
